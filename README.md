@@ -10,6 +10,10 @@ Angular directive to impose Angular Material based loading indicator on any cont
  * Well configurable.
  * Works well in SSR mode.
 
+# Demo
+![alt text](https://github.com/aramwram/ng-material-loading-directive/blob/master/demo.png?raw=true)
+Also you can clone the repo and start the application locally to see ng-material-loading lib in action.
+
 # Usage
 Install package
 ```sh
