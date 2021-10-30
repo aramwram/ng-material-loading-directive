@@ -1,0 +1,35 @@
+@import '~@angular/material/_theming.scss';
+@import './app-theme-variables';
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 36px;
+  padding: 36px 48px;
+}
+
+mat-card-content {
+  max-height: 140px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.record {
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  mat-divider {
+    position: initial;
+  }
+}
+
+.no-content {
+  height: 100%;
+}

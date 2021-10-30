@@ -1,0 +1,78 @@
+<mat-toolbar color="primary">
+  <div>NgMaterialLoadingDirective Demo</div>
+
+  <button mat-raised-button color="accent" (click)="toggleLoading()">{{ (loading$ | async) ? 'Stop loading' : 'Start loading' }}</button>
+
+  <div [ngMatLoading]="loading$ | async" [ngMatLoadingDiameter]="20" [ngMatLoadingContentOpacity]="0.3" ngMatLoadingColor="warn">
+    <button mat-icon-button color="warn">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div class="cards">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>No content</mat-card-title>
+      <mat-card-subtitle>Spinner</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="no-content" [ngMatLoading]="loading$ | async">
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Plane text</mat-card-title>
+      <mat-card-subtitle>Spinner</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content [ngMatLoading]="loading$ | async">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Scroll pagination</mat-card-title>
+      <mat-card-subtitle>Progress</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content #recordsContainer [ngMatLoading]="recordsLoading$ | async" ngMatLoadingType="progress">
+      <div *ngFor="let record of (records$ | async)" class="record">
+        <div>{{ record }}</div>
+        <mat-divider></mat-divider>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Input & Select</mat-card-title>
+      <mat-card-subtitle>Progress</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div>
+        <mat-form-field [ngMatLoading]="loading$ | async" ngMatLoadingType="progress">
+          <input matInput placeholder="Label" [formControl]="inputFormCtl"/>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field [ngMatLoading]="loading$ | async" ngMatLoadingType="progress">
+          <mat-select matInput placeholder="Label" [formControl]="selectFormCtl">
+            <mat-option [value]="1">One</mat-option>
+            <mat-option [value]="2">Two</mat-option>
+            <mat-option [value]="3">Three</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
