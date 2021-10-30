@@ -1,27 +1,88 @@
-# Demo
+# Description
+Angular directive to impose Angular Material based loading indicator on any content. The loading indicator may be an indeterminate Angular Material progress spinner or a progress bar.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.12.
+[![npm version](https://badge.fury.io/js/ng-social-links.svg)](https://badge.fury.io/js/ng-material-loading)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/aramwram/ng-material-loading-directive/blob/master/LICENSE.md)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-## Development server
+ * Compatible with Angular Material components such as input, select, etc.
+ * Uses Angular Material Theme colors.
+ * Well configurable.
+ * Works well in SSR mode.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Usage
+Install package
+```sh
+npm i ng-material-loading
+```
+Add import to your module
+```js
+import { NgMaterialLoadingModule } from 'ng-material-loading';
 
-## Code scaffolding
+@NgModule({
+  imports: [
+    ...
+    NgMaterialLoadingModule.forRoot(),
+    ],
+  declarations: [],
+  providers: []
+})
+```
+Then in template:
+```html
+  <mat-form-field [ngMatLoading]="loading$ | async" ngMatLoadingType="progress">
+    <input matInput/>
+  </mat-form-field>
+```
+or
+```html
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Plane text</mat-card-title>
+      <mat-card-subtitle>Spinner</mat-card-subtitle>
+    </mat-card-header>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    <mat-card-content [ngMatLoading]="loading$ | async">
+      <p>Lorem ipsum dolor sit amet...</p>
+    </mat-card-content>
+  </mat-card>
+```
 
-## Build
+## Options
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+There are **individual options** and **global options**.
 
-## Running unit tests
+### Individual Options
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+| Option            | Type                           | Default                        | Description                                                                |
+| ----------------- | ------------------------------ | ------------------------------ | -------------------------------------------------------------------------- |
+| opacity           | number                         | 0.3                            | Content opacity when the loading indicator is imposed                      |
+| diameter          | number                         | 40                             | Spinner diameter in pixels                                                 |
+| color             | 'primary' | 'warn' | 'accent'  | 'primary'                      | Loading indicator color                                                    |
+| type              | 'spinner' | 'progress'         | 'spinner'                      | Time to close after a user hovers over toast                               |
+| attacheTo         | string                         | null                           | Selector of HTML element to which the loadinf indicator should be attached |
 
-## Running end-to-end tests
+## Configuration
+You can configure default ng-material-loading options:
+```js
+NgMaterialLoadingModule.forRoot({
+  opacity: 0.45,
+  type: 'progress',
+  ...
+})
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The configuration interface looks like this:
+```js
+export interface NgMatLoadingConfig {
+  opacity?: number; // Default content opacity when the loading indicator is imposed
+  diameter?: number; // Default spinner diameter in pixels
+  color?: 'primary' | 'warn' | 'accent'; // Default loading indicator color
+  type?: 'spinner' | 'progress'; // Default loading indicator type
+  attacheTo?: { [key: string]: string; } // host to target map (see below)
+}
+```
+In ```attacheTo``` object you can list selector to which loading indicator should be attached for some commonly encountered host elements. 
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Contributig to ng-material-loading
+You are more than welcome to improve this library or create issues on the GitHub issue tracker.
