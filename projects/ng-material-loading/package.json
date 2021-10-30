@@ -1,9 +1,39 @@
 {
   "name": "ng-material-loading",
-  "version": "0.0.1",
+  "version": "1.0.1",
+  "description": "Angular directive to impose Angular Material based loading indicator on any content",
+  "author": {
+    "email": "aram.khachatrian.go@gmail.com",
+    "name": "Aram Khachatrian"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aramwram/ng-material-loading-directive"
+  },
+  "bugs": {
+    "url": "https://github.com/aramwram/ng-material-loading-directive/issues"
+  },
+  "homepage": "https://github.com/aramwram/ng-material-loading-directive",
+  "keywords": [
+    "angular",
+    "loading",
+    "directive",
+    "indicator",
+    "spinner",
+    "progress",
+    "material"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
   "peerDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0"
+    "@angular/common": ">=11",
+    "@angular/core": ">=11"
   },
   "dependencies": {
     "tslib": "^2.3.0"
