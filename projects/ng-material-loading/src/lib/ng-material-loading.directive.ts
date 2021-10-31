@@ -59,7 +59,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     if (this.ngMatLoading) {
       this.imposeLoading();
     } else {
-      this.removeLoading();
+      this.executeOnStableZone(() => this.removeLoading());
     }
   }
 

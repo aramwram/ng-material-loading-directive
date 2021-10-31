@@ -30,7 +30,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    console.log(this);
+  }
 
   ngAfterViewInit(): void {
     fromEvent(this.recordsContainer.nativeElement, 'scroll')
