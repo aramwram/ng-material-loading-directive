@@ -188,6 +188,8 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
           'height',
           `${diameter}px`
         );
+      } else {
+        this.renderer.setStyle(this.loadingElement, 'min-height', '4px');
       }
 
       (Array.from(this.elRef.nativeElement.children) as HTMLElement[]).forEach(
