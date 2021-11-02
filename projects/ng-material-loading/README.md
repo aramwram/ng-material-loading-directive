@@ -54,9 +54,6 @@ or
 
 ## Options
 
-There are **individual options** and **global options**.
-
-### Individual Options
 
 | Option            | Type                           | Default                        | Description                                                                |
 | ----------------- | ------------------------------ | ------------------------------ | -------------------------------------------------------------------------- |
