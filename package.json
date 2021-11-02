@@ -1,7 +1,7 @@
 {
-  "name": "ng-material-loading-demo",
-  "version": "0.0.0",
-  "description": "Demo app for ng-material-loading",
+  "name": "ng-material-loading",
+  "version": "1.0.6",
+  "description": "Angular directive to impose Angular Material based loading indicator on any content",
   "author": {
     "email": "aram.khachatrian.go@gmail.com",
     "name": "Aram Khachatrian"
@@ -14,6 +14,15 @@
     "url": "https://github.com/aramwram/ng-material-loading-directive/issues"
   },
   "homepage": "https://github.com/aramwram/ng-material-loading-directive",
+  "keywords": [
+    "angular",
+    "loading",
+    "directive",
+    "indicator",
+    "spinner",
+    "progress",
+    "material"
+  ],
   "license": "MIT",
   "scripts": {
     "ng": "ng",

@@ -1,6 +1,6 @@
 {
   "name": "ng-material-loading",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Angular directive to impose Angular Material based loading indicator on any content",
   "author": {
     "email": "aram.khachatrian.go@gmail.com",

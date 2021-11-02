@@ -9,6 +9,7 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
+  Optional,
   PLATFORM_ID,
   Renderer2,
   ViewContainerRef,
@@ -100,7 +101,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private zone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
-    @Inject(ngMatLoadingConfig) private ngMatLoadingConfig: NgMatLoadingConfig
+    @Optional() @Inject(ngMatLoadingConfig) private ngMatLoadingConfig: NgMatLoadingConfig
   ) {
     this.config = {
       opacity: 0.3,
