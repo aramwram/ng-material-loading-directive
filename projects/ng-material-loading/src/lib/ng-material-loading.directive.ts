@@ -34,6 +34,10 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     this.config.diameter = coerceNumberProperty(value);
   }
 
+  @Input() set ngMatLoadingFreeze(value: boolean) {
+    this.config.freeze = coerceBooleanProperty(value);
+  }
+
   @Input() set ngMatLoadingColor(value: 'primary' | 'warn' | 'accent') {
     this.config.color = value;
   }
@@ -42,7 +46,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     this.config.type = value;
   }
 
-  @Input() attacheTo: string;
+  @Input() ngMatLoadingAttacheTo: string;
 
   @Input() set ngMatLoading(value: boolean) {
     const ngMatLoading = coerceBooleanProperty(value);
@@ -111,6 +115,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
       attacheTo: {
         'mat-form-field': '.mat-form-field-wrapper'
       },
+      freeze: true,
       ...this.ngMatLoadingConfig
     };
   }
@@ -150,6 +155,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
       (this.componentRef.instance as MatSpinner).diameter = diameter;
     } else {
       this.componentRef.instance.mode = 'indeterminate';
+      this.renderer.setStyle(this.elRef.nativeElement, 'min-height', '4px');
     }
 
     this.loadingElement = this.compRef._elementRef.nativeElement;
@@ -157,8 +163,10 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     this.prevHostPosition = this.elRef.nativeElement.style.position;
     this.renderer.setStyle(this.elRef.nativeElement, 'position', 'relative');
 
-    this.prevHostPointerEvents = this.elRef.nativeElement.style.pointerEvents;
-    this.renderer.setStyle(this.elRef.nativeElement, 'pointer-events', 'none');
+    if (this.config.freeze) {
+      this.prevHostPointerEvents = this.elRef.nativeElement.style.pointerEvents;
+      this.renderer.setStyle(this.elRef.nativeElement, 'pointer-events', 'none');
+    }
 
     this.executeOnStableZone(() => {
       this.renderer.appendChild(
@@ -166,9 +174,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         this.loadingElement
       );
 
-      if (this.config.type === 'spinner') {
-        this.renderer.setStyle(this.loadingElement, 'position', 'absolute');
-      }
+      this.renderer.setStyle(this.loadingElement, 'position', 'absolute');
 
       this.renderer.setStyle(
         this.loadingElement,
@@ -178,7 +184,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
       this.renderer.setStyle(
         this.loadingElement,
         'bottom',
-        this.config.type === 'spinner' ? `calc((100% - ${diameter}px) / 2)` : '0px'
+        this.config.type === 'spinner' ? `calc((100% - ${diameter}px) / 2)` : 'unset'
       );
       this.renderer.setStyle(this.loadingElement, 'width', 'unset');
 
@@ -191,6 +197,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         );
       } else {
         this.renderer.setStyle(this.loadingElement, 'min-height', '4px');
+        this.renderer.setStyle(this.loadingElement, 'width', '100%');
       }
 
       (Array.from(this.elRef.nativeElement.children) as HTMLElement[]).forEach(
@@ -212,9 +219,9 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         }
       );
 
-      let attacheTo = this.attacheTo;
+      let attacheTo = this.ngMatLoadingAttacheTo;
 
-      if (!this.attacheTo && this.config.attacheTo) {
+      if (!attacheTo && this.config.attacheTo) {
         attacheTo = this.config.attacheTo[this.elRef.nativeElement.tagName.toLocaleLowerCase()];
       }
 
@@ -237,7 +244,10 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     }
 
     this.renderer.removeStyle(this.elRef.nativeElement, 'position');
-    this.renderer.removeStyle(this.elRef.nativeElement, 'pointer-events');
+
+    if (this.config.freeze) {
+      this.renderer.removeStyle(this.elRef.nativeElement, 'pointer-events');
+    }
 
     if (this.prevHostPosition) {
       this.renderer.setStyle(
@@ -250,7 +260,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     if (this.prevHostPointerEvents) {
       this.renderer.setStyle(
         this.elRef.nativeElement,
-        'position',
+        'pointer-events',
         this.prevHostPointerEvents
       );
     }
