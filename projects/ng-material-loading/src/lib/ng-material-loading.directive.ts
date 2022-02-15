@@ -174,7 +174,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         this.loadingElement
       );
 
-      this.renderer.setStyle(this.loadingElement, 'position', 'absolute');
+      this.renderer.setStyle(this.loadingElement, 'position', this.config.type === 'spinner' ? 'absolute' : 'sticky');
 
       this.renderer.setStyle(
         this.loadingElement,
@@ -184,7 +184,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
       this.renderer.setStyle(
         this.loadingElement,
         'bottom',
-        this.config.type === 'spinner' ? `calc((100% - ${diameter}px) / 2)` : 'unset'
+        this.config.type === 'spinner' ? `calc((100% - ${diameter}px) / 2)` : '0px'
       );
       this.renderer.setStyle(this.loadingElement, 'width', 'unset');
 
