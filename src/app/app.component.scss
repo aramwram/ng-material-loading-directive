@@ -1,4 +1,4 @@
-@import '~@angular/material/_theming.scss';
+@import '@angular/material/_theming';
 @import './app-theme-variables';
 
 mat-toolbar {
@@ -32,4 +32,10 @@ mat-card-content {
 
 .no-content {
   height: 100%;
+}
+
+.mat-mdc-card-content.scroll-pagination-container {
+  padding-bottom: 0;
+  margin-bottom: 16px;
+  margin: 0 16px;
 }

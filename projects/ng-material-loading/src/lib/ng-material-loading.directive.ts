@@ -1,6 +1,4 @@
 import {
-  ComponentFactory,
-  ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
@@ -16,8 +14,9 @@ import {
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
-import { MatProgressBar } from '@angular/material/progress-bar';
-import { MatSpinner } from '@angular/material/progress-spinner';
+import { MatProgressBar, ProgressBarMode } from '@angular/material/progress-bar';
+import { MatProgressSpinner, ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { ThemePalette } from '@angular/material/core';
 import { take } from 'rxjs/operators';
 import { ngMatLoadingConfig } from './ng-material-loading.tokens';
 import { NgMatLoadingConfig } from './ng-material-loading.types';
@@ -38,7 +37,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     this.config.freeze = coerceBooleanProperty(value);
   }
 
-  @Input() set ngMatLoadingColor(value: 'primary' | 'warn' | 'accent') {
+  @Input() set ngMatLoadingColor(value: ThemePalette) {
     this.config.color = value;
   }
 
@@ -75,16 +74,16 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
   private initialised = false;
 
   private _ngMatLoading = false;
-  private componentRef: ComponentRef<MatProgressBar | MatSpinner>;
+  private componentRef: ComponentRef<MatProgressBar | MatProgressSpinner>;
   private prevHostPosition: string;
   private prevHostPointerEvents: string;
   private prevChildrenStyle: Map<HTMLElement, { opacity: number }> = new Map();
   private loadingElement: HTMLElement;
   private config: NgMatLoadingConfig;
 
-  get compRef(): MatProgressBar | MatSpinner {
+  get compRef(): MatProgressBar | MatProgressSpinner {
     const compRef = this.config.type === 'spinner'
-      ? this.componentRef.injector.get(MatSpinner)
+      ? this.componentRef.injector.get(MatProgressSpinner)
       : this.componentRef.injector.get(MatProgressBar);
 
     compRef.color = this.config.color;
@@ -92,16 +91,9 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     return compRef;
   }
 
-  get factory(): ComponentFactory<MatProgressBar | MatSpinner> {
-    return this.config.type === 'spinner'
-      ? this.componentFactoryResolver.resolveComponentFactory(MatSpinner)
-      : this.componentFactoryResolver.resolveComponentFactory(MatProgressBar);
-  }
-
   constructor(
     private target: ViewContainerRef,
     private elRef: ElementRef<HTMLElement>,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private renderer: Renderer2,
     private zone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
@@ -113,7 +105,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
       color: 'primary',
       type: 'spinner',
       attacheTo: {
-        'mat-form-field': '.mat-form-field-wrapper'
+        'mat-form-field': '.mat-mdc-text-field-wrapper'
       },
       freeze: true,
       ...this.ngMatLoadingConfig
@@ -149,13 +141,16 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         this.elRef.nativeElement.offsetWidth
       );
 
-    this.componentRef = this.target.createComponent(this.factory);
+    this.componentRef = this.config.type === 'spinner'
+      ? this.target.createComponent(MatProgressSpinner)
+      : this.target.createComponent(MatProgressBar);
 
     if (this.config.type === 'spinner') {
-      (this.componentRef.instance as MatSpinner).diameter = diameter;
+      (this.componentRef.instance as MatProgressSpinner).diameter = diameter;
+      this.componentRef.instance.mode = 'indeterminate' as ProgressSpinnerMode;
     } else {
-      this.componentRef.instance.mode = 'indeterminate';
       this.renderer.setStyle(this.elRef.nativeElement, 'min-height', '4px');
+      this.componentRef.instance.mode = 'indeterminate' as ProgressBarMode;
     }
 
     this.loadingElement = this.compRef._elementRef.nativeElement;
@@ -174,7 +169,7 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         this.loadingElement
       );
 
-      this.renderer.setStyle(this.loadingElement, 'position', this.config.type === 'spinner' ? 'absolute' : 'sticky');
+      this.renderer.setStyle(this.loadingElement, 'position', 'absolute');
 
       this.renderer.setStyle(
         this.loadingElement,

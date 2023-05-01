@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { BehaviorSubject, fromEvent, Observable, of, Subject } from 'rxjs';
 import { delay, filter, map, mergeMap, scan, takeUntil, tap, throttleTime, withLatestFrom } from 'rxjs/operators';
 
@@ -30,7 +30,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: UntypedFormBuilder) {}
 
   ngAfterViewInit(): void {
     fromEvent(this.recordsContainer.nativeElement, 'scroll')
