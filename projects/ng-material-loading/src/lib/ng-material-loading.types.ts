@@ -5,4 +5,5 @@ export interface NgMatLoadingConfig {
   type?: 'spinner' | 'progress';
   freeze?: boolean;
   attacheTo?: { [key: string]: string; } // host to target map
+  postision?: 'absolute' | 'relative' | 'sticky' | undefined;
 }

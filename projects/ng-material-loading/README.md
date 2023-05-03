@@ -52,16 +52,17 @@ or
   </mat-card>
 ```
 
-## Options
+### Options
 
-
-| Option            | Type                           | Default                        | Description                                                                |
-| ----------------- | ------------------------------ | ------------------------------ | -------------------------------------------------------------------------- |
-| opacity           | number                         | 0.3                            | Content opacity when the loading indicator is imposed                      |
-| diameter          | number                         | 40                             | Spinner diameter in pixels                                                 |
-| color             | 'primary' | 'warn' | 'accent'  | 'primary'                      | Loading indicator color                                                    |
-| type              | 'spinner' | 'progress'         | 'spinner'                      | Time to close after a user hovers over toast                               |
-| attacheTo         | string                         | null                           | Selector of HTML element to which the loadinf indicator should be attached |
+| Option                     | Type                           | Default                        | Description                                                                |
+| -------------------------- | ------------------------------ | ------------------------------ | -------------------------------------------------------------------------- |
+| ngMatLoadingContentOpacity | number                         | 0.3                            | Content opacity when the loading indicator is imposed                      |
+| ngMatLoadingDiameter       | number                         | 40                             | Spinner diameter in pixels                                                 |
+| ngMatLoadingColor          | 'primary', 'warn', 'accent'  | 'primary'                      | Loading indicator color                                                    |
+| ngMatLoadingType           | 'spinner', 'progress'         | 'spinner'                      | Time to close after a user hovers over toast                               |
+| ngMatLoadingAttacheTo      | string                         | null                           | Selector of HTML element to which the loadinf indicator should be attached |
+| ngMatLoadingFreeze         | boolean                        | true                           | Whether to make content inactive while loading                             |
+| ngMatLoadingPosition       | 'absolute', 'relative', 'sticky' | Depends on loading indicator type | Loading indicator CSS position |
 
 ## Configuration
 You can configure default ng-material-loading options:
@@ -76,14 +77,18 @@ NgMaterialLoadingModule.forRoot({
 The configuration interface looks like this:
 ```js
 export interface NgMatLoadingConfig {
-  opacity?: number; // Default content opacity when the loading indicator is imposed
-  diameter?: number; // Default spinner diameter in pixels
-  color?: 'primary' | 'warn' | 'accent'; // Default loading indicator color
-  type?: 'spinner' | 'progress'; // Default loading indicator type
+  opacity?: number; // Content opacity when the loading indicator is imposed
+  diameter?: number; // Spinner diameter in pixels
+  color?: 'primary' | 'warn' | 'accent'; //Loading indicator color
+  type?: 'spinner' | 'progress'; // Loading indicator type
   attacheTo?: { [key: string]: string; } // host to target map (see below)
+  freeze?: boolean; // Whether to make content inactive while loading
+  position?: 'absolute' | 'relative' | 'sticky' // Loading indicator CSS position
 }
 ```
 In ```attacheTo``` object you can list selector to which loading indicator should be attached for some commonly encountered host elements. 
+
+The ```position```config option, if not set, depends on loading idicator type. For spinner position is ```absolute``` while for progress bar position is sticky by default.
 
 # Contributig to ng-material-loading
 You are more than welcome to improve this library or create issues on the GitHub issue tracker.

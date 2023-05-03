@@ -67,6 +67,10 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
     }
   }
 
+  @Input() set ngMatLoadingPosition(value: NgMatLoadingConfig['postision']) {
+    this.config.postision = value;
+  }
+
   get ngMatLoading(): boolean {
     return this._ngMatLoading;
   }
@@ -169,7 +173,9 @@ export class NgMaterialLoadingDirective implements OnInit, OnDestroy {
         this.loadingElement
       );
 
-      this.renderer.setStyle(this.loadingElement, 'position', 'absolute');
+      const postision = this.config.postision || (this.config.type === 'spinner' ? 'absolute' : 'sticky');
+
+      this.renderer.setStyle(this.loadingElement, 'position', postision);
 
       this.renderer.setStyle(
         this.loadingElement,
